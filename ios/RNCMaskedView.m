@@ -16,7 +16,7 @@
   // RNCMaskedView expects that the first subview rendered is the mask.
   UIView *maskView = [self.reactSubviews firstObject];
   self.maskView = maskView;
-
+  
   // Add the other subviews to the view hierarchy
   for (NSUInteger i = 1; i < self.reactSubviews.count; i++) {
     UIView *subview = [self.reactSubviews objectAtIndex:i];
