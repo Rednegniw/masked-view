@@ -5,17 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import "RNCMaskedViewManager.h"
+#import "NFMaskedViewManager.h"
 
-#import "RNCMaskedView.h"
+#ifndef RCT_NEW_ARCH_ENABLED
+#import "NFMaskedView.h"
+#endif
 
-@implementation RNCMaskedViewManager
+@implementation NFMaskedViewManager
 
 RCT_EXPORT_MODULE()
 
+#ifndef RCT_NEW_ARCH_ENABLED
 - (UIView *)view
 {
-  return [RNCMaskedView new];
+  return [NFMaskedView new];
 }
+#endif
 
 @end

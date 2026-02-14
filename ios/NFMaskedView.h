@@ -5,8 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import <React/RCTViewManager.h>
+#import <UIKit/UIKit.h>
 
-@interface RNCMaskedViewManager : RCTViewManager
+#import <React/RCTView.h>
+
+@interface NFMaskedView : RCTView
 
 @end

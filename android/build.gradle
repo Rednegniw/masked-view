@@ -2,6 +2,10 @@ def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
+def isNewArchitectureEnabled() {
+    return project.hasProperty("newArchEnabled") && project.newArchEnabled == "true"
+}
+
 buildscript {
   if (project == rootProject) {
     repositories {
@@ -17,42 +21,27 @@ buildscript {
 
 apply plugin: 'com.android.library'
 
-def agpVersion = com.android.Version.ANDROID_GRADLE_PLUGIN_VERSION.tokenize('.')[0].toInteger()
-def shouldUseNameSpace = agpVersion >= 7
-def PACKAGE_PROP = "package=\"org.reactnative.maskedview\""
-def manifestOutFile = file("${projectDir}/src/main/AndroidManifest.xml")
-def manifestContent = manifestOutFile.getText()
-if(shouldUseNameSpace){
-      manifestContent = manifestContent.replaceAll(
-        PACKAGE_PROP,
-        ''
-    )  
-} else {
-    if(!manifestContent.contains("$PACKAGE_PROP")){
-        manifestContent = manifestContent.replace(
-            '<manifest',
-            "<manifest $PACKAGE_PROP "
-        )
-    }
+if (isNewArchitectureEnabled()) {
+    apply plugin: "com.facebook.react"
 }
-manifestContent.replaceAll("  ", " ")
-manifestOutFile.write(manifestContent)
 
 android {
-  compileSdkVersion safeExtGet('compileSdkVersion', 28)
-  
-  if(shouldUseNameSpace){
-    namespace = "org.reactnative.maskedview"
-  }
+  compileSdkVersion safeExtGet('compileSdkVersion', 34)
+  namespace = "com.numberflow.maskedview"
 
   defaultConfig {
-    minSdkVersion safeExtGet('minSdkVersion', 16)
-    targetSdkVersion safeExtGet('targetSdkVersion', 28)
+    minSdkVersion safeExtGet('minSdkVersion', 24)
+    targetSdkVersion safeExtGet('targetSdkVersion', 34)
+    buildConfigField "boolean", "IS_NEW_ARCHITECTURE_ENABLED", isNewArchitectureEnabled().toString()
   }
 
-  sourceSets {
-    main {
-      java.srcDirs = ['src/main/java']
+  sourceSets.main {
+    java {
+      if (isNewArchitectureEnabled()) {
+        srcDirs += ["src/newarch/java", "${project.buildDir}/generated/source/codegen/java"]
+      } else {
+        srcDirs += ["src/oldarch/java"]
+      }
     }
   }
 
@@ -60,20 +49,17 @@ android {
     abortOnError false
     warning 'InvalidPackage'
   }
-    buildTypes {
-        release {
-        }
+
+  buildTypes {
+    release {
     }
+  }
 }
 
 repositories {
   google()
   maven { url "https://jitpack.io" }
   mavenCentral()
-  maven {
-    // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-    url "$rootDir/../node_modules/react-native/android"
-  }
 }
 
 dependencies {

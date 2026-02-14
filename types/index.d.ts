@@ -10,7 +10,7 @@ interface MaskedViewProps extends ReactNative.ViewProps {
   androidRenderingMode?: 'software' | 'hardware';
 }
 /**
- * @see https://github.com/react-native-masked-view/masked-view
+ * @see https://github.com/Rednegniw/masked-view
  */
 declare class MaskedViewComponent extends React.Component<MaskedViewProps> {}
 declare const MaskedViewBase: Constructor<

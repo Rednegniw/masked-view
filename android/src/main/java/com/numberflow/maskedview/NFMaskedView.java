@@ -1,4 +1,4 @@
-package org.reactnative.maskedview;
+package com.numberflow.maskedview;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -10,8 +10,8 @@ import android.view.View;
 
 import com.facebook.react.views.view.ReactViewGroup;
 
-public class RNCMaskedView extends ReactViewGroup {
-  private static final String TAG = "RNCMaskedView";
+public class NFMaskedView extends ReactViewGroup {
+  private static final String TAG = "NFMaskedView";
 
   private Bitmap mBitmapMask = null;
   private boolean mBitmapMaskInvalidated = false;
@@ -19,7 +19,7 @@ public class RNCMaskedView extends ReactViewGroup {
   private PorterDuffXfermode mPorterDuffXferMode;
   private int mRenderingMode = View.LAYER_TYPE_HARDWARE;
 
-  public RNCMaskedView(Context context) {
+  public NFMaskedView(Context context) {
     super(context);
 
     mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);

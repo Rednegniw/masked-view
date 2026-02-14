@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-#import "RNCMaskedView.h"
+#import "NFMaskedView.h"
 
 #import <React/UIView+React.h>
 
-@implementation RNCMaskedView
+@implementation NFMaskedView
 
 - (void)didUpdateReactSubviews
 {
-  // RNCMaskedView expects that the first subview rendered is the mask.
+  // NFMaskedView expects that the first subview rendered is the mask.
   UIView *maskView = [self.reactSubviews firstObject];
   self.maskView = maskView;
 
@@ -27,7 +27,7 @@
 - (void)displayLayer:(CALayer *)layer
 {
   // RCTView uses displayLayer to do border rendering.
-  // We don't need to do that in RNCMaskedView, so we
+  // We don't need to do that in NFMaskedView, so we
   // stub this method and override the default implementation.
 }
 
